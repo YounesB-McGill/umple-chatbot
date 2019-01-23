@@ -43,8 +43,16 @@ function processResponse(err, response) {
     console.error(err); // something went wrong
     return;
   }
+  
 
   var endConversation = false;
+
+// ADDITION FROM V2.0
+  // If an intent was detected, log it out to the console.
+  if (response.output.intents.length > 0) {
+    console.log('Detected intent: #' + response.output.intents[0].intent);
+  }
+
 
   // Check for client actions requested by the assistant.
   if (response.output.actions) {
@@ -61,6 +69,9 @@ function processResponse(err, response) {
   } else {
     // Display the output from assistant, if any. Assumes a single text response.
     if (response.output.generic.length != 0) {
+      //ADDITION FROM V2.0
+      console.log(JSON.stringify(response, null, 2));
+
       console.log(response.output.generic[0].text);
     }
   }
